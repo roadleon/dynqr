@@ -1,124 +1,119 @@
-// SupabaseとQRコードのライブラリをインポートする
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-import QRCode from 'https://cdn.jsdelivr.net/npm/qrcode/+esm';
+// Supabase client libraryをインポート
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.44.2/+esm';
 
-// SupabaseプロジェクトのURLとanonキー（公開しても安全なキー）
+// --- 重要：あなたのSupabase URLとAnon Keyに置き換えてください ---
 const SUPABASE_URL = 'https://phvfayqklknxrvyfjzru.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBodmZheXFrbGtueHJ2eWZqenJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyNTc1NzUsImV4cCI6MjA3MzgzMzU3NX0.iMb2goMgHYzAPjePlawuIe0ovoJ_WHB89fzkPy_U0Ds';
+// ----------------------------------------------------
 
 // Supabaseクライアントを初期化
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// HTMLから必要な要素を取得
-const qrForm = document.getElementById('qr-form');
-const destinationUrlInput = document.getElementById('destination-url');
+// HTML要素を取得
+const form = document.getElementById('qr-form');
+const urlInput = document.getElementById('url-input');
 const loader = document.getElementById('loader');
-const generatorSection = document.getElementById('generator-section');
-const resultSection = document.getElementById('result-section');
-const qrCanvas = document.getElementById('qr-canvas');
-const downloadLink = document.getElementById('download-link');
+const resultSection = document.getElementById('result');
+const qrCodeContainer = document.getElementById('qrcode');
+const downloadBtn = document.getElementById('download-btn');
 const editUrlInput = document.getElementById('edit-url');
-const copyButton = document.getElementById('copy-button');
-const copyFeedback = document.getElementById('copy-feedback');
+const copyBtn = document.getElementById('copy-btn');
+const qrRedirectUrl = document.getElementById('qr-redirect-url');
 
-/**
- * ランダムな文字列を生成する関数 (URLセーフ)
- * @param {number} length - 生成する文字列の長さ
- * @returns {string} ランダムな文字列
- */
-function generateRandomString(length) {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0-9';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-}
-
-/**
- * フォームが送信されたときの処理
- * @param {Event} e - イベントオブジェクト
- */
-async function handleFormSubmit(e) {
-    e.preventDefault(); // フォームのデフォルトの送信動作をキャンセル
-
-    // UIを「処理中」の状態にする
-    loader.classList.remove('hidden');
+// フォームの送信イベントを処理
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
     resultSection.classList.add('hidden');
+    qrCodeContainer.innerHTML = '';
+    loader.classList.remove('hidden');
 
-    const destinationUrl = destinationUrlInput.value;
+    const url = urlInput.value.trim();
+    if (!url) {
+        alert('Please enter a destination URL.');
+        loader.classList.add('hidden');
+        return;
+    }
 
-    // 6文字の短いコードと、32文字の編集用トークンを生成
-    const shortCode = generateRandomString(6);
-    const editToken = generateRandomString(32);
+    // ★★★ エラー表示機能 ★★★
+    // 以前のエラーメッセージがあれば削除
+    const existingError = document.getElementById('insert-error');
+    if (existingError) {
+        existingError.remove();
+    }
 
     try {
-        // Supabaseの'links'テーブルにデータを挿入
+        // 短いコードと編集トークンを生成
+        const shortCode = Math.random().toString(36).substring(2, 8);
+        const editToken = Math.random().toString(36).substring(2, 12) + Math.random().toString(36).substring(2, 12);
+
+        // Supabaseにデータを挿入
         const { data, error } = await supabase
             .from('links')
             .insert([
                 {
+                    destination_url: url,
                     short_code: shortCode,
-                    destination_url: destinationUrl,
-                    edit_token: editToken
-                }
+                    edit_token: editToken,
+                },
             ])
-            .select()
-            .single(); // 挿入したデータを返してもらう
+            .select(); // RLSのエラーを取得するために.select()が必要
 
+        // 挿入時にエラーがあれば、それをスローしてcatchブロックで処理
         if (error) {
-            // もしshort_codeが重複していたらリトライするなどの処理も考えられるが、まずはエラーを投げる
             throw error;
         }
+        
+        // データが返ってこない場合もエラーとして扱う (RLSが原因の場合など)
+        if (!data || data.length === 0) {
+            throw new Error('Data was not saved to the database. This might be due to Row Level Security policies.');
+        }
 
-        // --- 成功した場合の処理 ---
-
-        // QRコードに含めるリダイレクト用URL (ドメイン名を含まない相対パスにする)
+        // QRコードを生成して表示
         const redirectUrl = `${window.location.origin}/${shortCode}`;
-        // 編集ページのURL
-        const editUrl = `${window.location.origin}/edit.html?token=${editToken}`;
-
-        // QRコードをcanvasに描画
-        await QRCode.toCanvas(qrCanvas, redirectUrl, {
-            width: 256,
-            margin: 2,
-            errorCorrectionLevel: 'H'
+        new QRCode(qrCodeContainer, {
+            text: redirectUrl,
+            width: 200,
+            height: 200,
         });
 
-        // ダウンロードリンクを設定
-        downloadLink.href = qrCanvas.toDataURL('image/png');
-        downloadLink.download = `dynqr-${shortCode}.png`;
+        // 結果を表示
+        qrRedirectUrl.textContent = redirectUrl;
+        downloadBtn.onclick = () => {
+            const canvas = qrCodeContainer.querySelector('canvas');
+            const dataUrl = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = `dynqr-${shortCode}.png`;
+            link.href = dataUrl;
+            link.click();
+        };
 
-        // 編集用URLを表示
+        const editUrl = `${window.location.origin}/edit.html?token=${editToken}`;
         editUrlInput.value = editUrl;
-
-        // UIを結果表示の状態にする
-        generatorSection.classList.add('hidden'); // フォームを隠す
-        resultSection.classList.remove('hidden'); // 結果を表示
+        resultSection.classList.remove('hidden');
 
     } catch (err) {
-        console.error('エラー:', err);
-        alert('An error occurred. Please check the URL and try again.');
+        console.error('Error during QR code generation:', err);
+        // ★★★ エラーを画面に表示 ★★★
+        const errorElement = document.createElement('p');
+        errorElement.id = 'insert-error';
+        errorElement.textContent = `ERROR: ${err.message}`;
+        errorElement.style.color = 'red';
+        errorElement.style.fontWeight = 'bold';
+        errorElement.style.marginTop = '1rem';
+        form.insertAdjacentElement('afterend', errorElement);
+
     } finally {
-        // 処理が成功しても失敗しても、ローダーは非表示にする
         loader.classList.add('hidden');
     }
-}
+});
 
-/**
- * コピーボタンがクリックされたときの処理
- */
-function copyEditUrl() {
+// コピーボタンの処理
+copyBtn.addEventListener('click', () => {
     editUrlInput.select();
     document.execCommand('copy');
-    copyFeedback.classList.remove('hidden');
+    copyBtn.textContent = 'Copied!';
     setTimeout(() => {
-        copyFeedback.classList.add('hidden');
-    }, 2000); // 2秒後に「コピーしました」を消す
-}
-
-
-// イベントリスナーを設定
-qrForm.addEventListener('submit', handleFormSubmit);
-copyButton.addEventListener('click', copyEditUrl);
+        copyBtn.textContent = 'Copy';
+    }, 2000);
+});
 
