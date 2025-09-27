@@ -1,21 +1,23 @@
-// Supabase client libraryをインポート
+// Import the Supabase client library
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.44.2/+esm';
 
+// Supabase project credentials
 const SUPABASE_URL = 'https://phvfayqklknxrvyfjzru.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBodmZheXFrbGtueHJ2eWZqenJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyNTc1NzUsImV4cCI6MjA3MzgzMzU3NX0.iMb2goMgHYzAPjePlawuIe0ovoJ_WHB89fzkPy_U0Ds';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// HTML要素を取得
+// Get HTML elements
 const form = document.getElementById('qr-form');
 const urlInput = document.getElementById('destination-url');
 const loader = document.getElementById('loader');
 
-// フォームの送信イベントを処理
+// Handle form submission
 form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission
     loader.classList.remove('hidden');
 
+    // Remove any existing error messages
     const existingError = document.getElementById('insert-error');
     if (existingError) {
         existingError.remove();
@@ -29,11 +31,11 @@ form.addEventListener('submit', async (e) => {
     }
 
     try {
-        // 短いコードと編集トークンを生成
+        // Generate a random short code and edit token
         const shortCode = Math.random().toString(36).substring(2, 8);
         const editToken = Math.random().toString(36).substring(2, 12) + Math.random().toString(36).substring(2, 12);
 
-        // Supabaseにデータを保存
+        // Save the data to Supabase
         const { data, error } = await supabase
             .from('links')
             .insert([{
@@ -43,15 +45,15 @@ form.addEventListener('submit', async (e) => {
             }, ])
             .select();
 
-        if (error) throw error;
+        if (error) throw error; // If Supabase returns an error, throw it
         if (!data || data.length === 0) throw new Error('Data was not saved successfully.');
         
-        // ★★★ ここが重要 ★★★
-        // 新しく作ったresult.htmlに、codeとtokenを付けて画面遷移させる
+        // ★★★ This is the key part ★★★
+        // Redirect to the new result.html with the code and token
         window.location.href = `/result.html?code=${shortCode}&token=${editToken}`;
 
     } catch (err) {
-        // エラーハンドリング
+        // Error handling: Display the error message on the page
         console.error('Error during QR code generation:', err);
         const errorElement = document.createElement('p');
         errorElement.id = 'insert-error';
@@ -62,7 +64,7 @@ form.addEventListener('submit', async (e) => {
         form.insertAdjacentElement('afterend', errorElement);
     
     } finally {
-        // ローダーを非表示にする
+        // Hide the loader
         loader.classList.add('hidden');
     }
 });
