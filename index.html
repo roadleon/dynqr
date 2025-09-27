@@ -49,11 +49,9 @@
         <!-- Result Section -->
         <section id="result-section" class="hidden mt-8 bg-white p-6 md:p-8 rounded-xl shadow-md text-center">
             <h2 class="text-2xl font-bold text-gray-800 mb-4">Your Dynamic QR Code is Ready!</h2>
-            <!-- ▼▼▼ この部分を変更 ▼▼▼ -->
-            <div id="qrcode-container" class="flex justify-center mb-4">
-                <!-- QRコードはここにJavaScriptによって生成されます -->
+            <div class="flex justify-center mb-4">
+                <canvas id="qr-canvas" class="border"></canvas>
             </div>
-            <!-- ▲▲▲ この部分を変更 ▲▲▲ -->
             <a id="download-link" class="inline-block bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition mb-6" href="#" download="dynqr-code.png">Download</a>
 
             <div class="bg-gray-100 p-4 rounded-lg text-left">
@@ -85,4 +83,3 @@
     <script type="module" src="app.js"></script>
 </body>
 </html>
-
