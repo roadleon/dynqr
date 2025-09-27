@@ -27,7 +27,7 @@ const copyFeedback = document.getElementById('copy-feedback');
  * @returns {string} ランダムな文字列
  */
 function generateRandomString(length) {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0-9';
     let result = '';
     for (let i = 0; i < length; i++) {
         result += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -73,9 +73,9 @@ async function handleFormSubmit(e) {
 
         // --- 成功した場合の処理 ---
 
-        // QRコードに含めるリダイレクト用URL（あとでVercelで設定する）
-        const redirectUrl = `https://dynqr.vercel.app/${shortCode}`;
-        // 編集ページのURL（あとで作成する）
+        // QRコードに含めるリダイレクト用URL (ドメイン名を含まない相対パスにする)
+        const redirectUrl = `${window.location.origin}/${shortCode}`;
+        // 編集ページのURL
         const editUrl = `${window.location.origin}/edit.html?token=${editToken}`;
 
         // QRコードをcanvasに描画
@@ -98,7 +98,7 @@ async function handleFormSubmit(e) {
 
     } catch (err) {
         console.error('エラー:', err);
-        alert('エラーが発生しました。入力したURLが正しいか確認し、もう一度お試しください。');
+        alert('An error occurred. Please check the URL and try again.');
     } finally {
         // 処理が成功しても失敗しても、ローダーは非表示にする
         loader.classList.add('hidden');
@@ -121,3 +121,4 @@ function copyEditUrl() {
 // イベントリスナーを設定
 qrForm.addEventListener('submit', handleFormSubmit);
 copyButton.addEventListener('click', copyEditUrl);
+
