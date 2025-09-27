@@ -1,8 +1,9 @@
 {
   "rewrites": [
     {
-      "source": "/:code",
-      "destination": "/api/redirect"
+      "source": "/:code([a-zA-Z0-9]{6})",
+      "destination": "/api/redirect?code=:code"
     }
   ]
 }
+
