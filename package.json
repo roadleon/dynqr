@@ -1,0 +1,16 @@
+{
+  "name": "dynqr",
+  "version": "1.0.0",
+  "description": "Dynamic QR Code Generator",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.43.5",
+    "qrcode": "^1.5.3"
+  },
+  "devDependencies": {
+    "serve": "^14.2.3"
+  }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DynQR - Dynamic QR Code Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* ちょっとしたカスタムスタイルを追加 */
+        .loader {
+            border-top-color: #3498db;
+            -webkit-animation: spinner 1.5s linear infinite;
+            animation: spinner 1.5s linear infinite;
+        }
+
+        @-webkit-keyframes spinner {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="container mx-auto px-4 py-8 md:py-16 max-w-2xl">
+
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">DynQR</h1>
+            <p class="text-gray-600 mt-2">Dynamic QR code generator</p>
+        </header>
+
+        <!-- QR Code Form -->
+        <main id="generator-section" class="bg-white p-6 md:p-8 rounded-xl shadow-md">
+            <p class="text-center text-gray-700 mb-6">Create free Dynamic QR codes that allow you to change the destination link later.</p>
+            <form id="qr-form" class="space-y-4">
+                <input type="url" id="destination-url" placeholder="https://example.com" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-transform transform hover:scale-105 flex items-center justify-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                    <span>Generate Dynamic QR Code for Free</span>
+                </button>
+            </form>
+            <div id="loader" class="hidden w-12 h-12 mx-auto mt-6 rounded-full border-4 border-gray-200 loader"></div>
+        </main>
+
+        <!-- Result Section -->
+        <section id="result-section" class="hidden mt-8 bg-white p-6 md:p-8 rounded-xl shadow-md text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Your Dynamic QR Code is Ready!</h2>
+            <div class="flex justify-center mb-4">
+                <canvas id="qr-canvas" class="border"></canvas>
+            </div>
+            <a id="download-link" class="inline-block bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition mb-6" href="#" download="dynqr-code.png">Download</a>
+
+            <div class="bg-gray-100 p-4 rounded-lg text-left">
+                <h3 class="font-bold text-lg mb-2">Your Secret Edit URL</h3>
+                <p class="text-sm text-gray-600 mb-2">This URL is your secret key to change the destination link. Please bookmark it or save it in a safe place.</p>
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="edit-url" readonly class="w-full bg-gray-200 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                    <button id="copy-button" class="bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition">Copy</button>
+                </div>
+                <p id="copy-feedback" class="text-green-600 text-sm mt-2 hidden">Copied!</p>
+                <p class="text-red-600 text-sm mt-3 font-semibold">Warning: We do not keep a copy of this secret URL. If you lose it, you will permanently lose access to edit your QR code.</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 text-sm mt-12">
+            <div class="space-x-4">
+                <a href="terms.html" class="hover:underline">Terms of Service</a>
+                <span>|</span>
+                <a href="privacy.html" class="hover:underline">Privacy Policy</a>
+                <span>|</span>
+                <span>Contact: contact-qr@ailys.app</span>
+            </div>
+            <p class="mt-4">&copy; 2025 A. Logos Ailys</p>
+        </footer>
+    </div>
+
+    <!-- JavaScriptファイルは後で作成する -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
