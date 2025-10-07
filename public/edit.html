@@ -4,12 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Link Destination - DynQR</title>
+    
+    <!-- Icons -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/logo.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Open Graph (OGP) for Social Sharing -->
+    <meta property="og:title" content="DynQR - Free Dynamic QR Code Generator">
+    <meta property="og:image" content="https://qr.ailys.app/og_image_en.jpg">
+    <meta property="og:url" content="https://qr.ailys.app/">
+    <meta property="og:type" content="website">
+
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 font-sans">
     <div class="container mx-auto px-4 py-8 md:py-16 max-w-2xl">
         <header class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">DynQR</h1>
+             <a href="/">
+                <img src="/logo.svg" alt="DynQR Logo" class="h-10 w-auto mx-auto">
+            </a>
         </header>
 
         <main id="edit-section" class="bg-white p-6 md:p-8 rounded-xl shadow-md text-center">
@@ -31,6 +45,6 @@
             <a href="/" class="hover:underline">Back to Home</a>
         </footer>
     </div>
-    <script type="module" src="edit.js"></script>
+    <script type="module" src="/edit.js"></script>
 </body>
 </html>
