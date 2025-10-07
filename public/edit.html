@@ -16,19 +16,30 @@
     <meta property="og:url" content="https://qr.ailys.app/">
     <meta property="og:type" content="website">
 
-    <!-- ▼▼▼ ここを更新 ▼▼▼ -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- ▲▲▲ ここを更新 ▲▲▲ -->
-
 </head>
-<body class="bg-gray-50 font-sans">
-    <div class="container mx-auto px-4 py-8 md:py-16 max-w-2xl">
-        <header class="text-center mb-8">
-             <a href="/">
-                <img src="/logo.svg" alt="DynQR Logo" class="h-10 w-auto mx-auto">
+<body class="bg-slate-50 font-sans">
+    <!-- ▼▼▼ 新しい共通ヘッダーを追加 ▼▼▼ -->
+    <header class="p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/">
+                <img src="/logo.svg" alt="DynQR Logo" class="h-8 w-auto">
             </a>
-        </header>
+            <div class="flex items-center space-x-2">
+                <a href="#" class="bg-blue-100 text-blue-800 text-sm font-semibold px-4 py-2 rounded-lg hover:bg-blue-200 transition-colors flex items-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    <span>Try Ideas</span>
+                </a>
+                <a href="https://x.com/intent/tweet?text=Check%20out%20this%20free%20Dynamic%20QR%20Code%20generator!&url=https%3A%2F%2Fqr.ailys.app" target="_blank" class="bg-black text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors flex items-center space-x-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z"/></svg>
+                    <span>Share on X</span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- ▲▲▲ 新しい共通ヘッダーを追加 ▲▲▲ -->
 
+    <div class="container mx-auto px-4 py-8 md:py-16 max-w-2xl">
         <main id="edit-section" class="bg-white p-6 md:p-8 rounded-xl shadow-md text-center">
             <h2 class="text-2xl font-bold text-gray-800 mb-2">Edit Link Destination</h2>
             <p class="text-gray-600 mb-6">Changing the link destination for QR code (<span id="short-code-display" class="font-mono bg-gray-200 px-1 rounded">...</span>).</p>
@@ -43,11 +54,33 @@
             </form>
             <div id="message-area" class="mt-4 text-center"></div>
         </main>
-
-         <footer class="text-center text-gray-500 text-sm mt-12">
-            <a href="/" class="hover:underline">Back to Home</a>
-        </footer>
     </div>
+
+    <!-- ▼▼▼ 新しいフッターに更新 ▼▼▼ -->
+    <footer class="text-center text-gray-500 text-sm py-10 px-4">
+        <div class="max-w-lg mx-auto mb-8">
+            <div class="bg-slate-100 p-4 rounded-lg text-center md:text-left">
+                <div class="md:flex md:items-center md:justify-between">
+                    <div>
+                        <h4 class="font-bold">Was this dynamic QR code helpful?</h4>
+                        <p class="text-xs text-gray-600 mt-1">This service is run as an experiment by the AI, A. Logos Ailys, and his creator. If you'd like to support our journey, please consider buying us a coffee.</p>
+                    </div>
+                    <a href="https://www.buymeacoffee.com/ailys" target="_blank" class="mt-4 md:mt-0 md:ml-4 inline-block bg-yellow-400 text-black font-semibold px-4 py-2 rounded-lg hover:bg-yellow-500 transition-colors flex-shrink-0">
+                        Buy me a coffee
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="space-x-4 md:space-x-6">
+            <a href="#" class="hover:underline">How to use</a>
+            <a href="/terms.html" class="hover:underline">Terms of Service</a>
+            <a href="/privacy.html" class="hover:underline">Privacy Policy</a>
+            <a href="mailto:contact-qr@ailys.app" class="hover:underline">Contact</a>
+        </div>
+        <p class="mt-4">&copy; 2025 A. Logos Ailys</p>
+    </footer>
+    <!-- ▲▲▲ 新しいフッターに更新 ▲▲▲ -->
+
     <script type="module" src="/edit.js"></script>
 </body>
 </html>
