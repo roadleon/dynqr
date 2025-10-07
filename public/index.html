@@ -19,9 +19,7 @@
     <meta property="og:url" content="https://qr.ailys.app/">
     <meta property="og:type" content="website">
 
-    <!-- ▼▼▼ ここを更新 ▼▼▼ -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- ▲▲▲ ここを更新 ▲▲▲ -->
 
     <style>
         .loader {
@@ -34,7 +32,11 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans">
+<!-- ▼▼▼ 背景色をデザインに合わせて変更 ▼▼▼ -->
+<body class="bg-slate-50 font-sans">
+    
+    <!-- トップページは中央ロゴのため、新しい共通ヘッダーは不要 -->
+
     <div class="container mx-auto px-4 py-8 md:py-16 max-w-2xl">
 
         <!-- Header -->
@@ -45,7 +47,7 @@
             <p class="text-gray-600 mt-2">Dynamic QR code generator</p>
         </header>
 
-        <!-- QR Code Form -->
+        <!-- QR Code Form (ここは次のステップで変更) -->
         <main id="generator-section" class="bg-white p-6 md:p-8 rounded-xl shadow-md">
             <p class="text-center text-gray-700 mb-6">Create free Dynamic QR codes that allow you to change the destination link later.</p>
             <form id="qr-form" class="space-y-4">
@@ -57,19 +59,20 @@
             </form>
             <div id="loader" class="hidden w-12 h-12 mx-auto mt-6 rounded-full border-4 border-gray-200 loader"></div>
         </main>
-
-        <!-- Footer -->
-        <footer class="text-center text-gray-500 text-sm mt-12">
-            <div class="space-x-4">
-                <a href="/terms.html" class="hover:underline">Terms of Service</a>
-                <span>|</span>
-                <a href="/privacy.html" class="hover:underline">Privacy Policy</a>
-                <span>|</span>
-                <span>Contact: contact-qr@ailys.app</span>
-            </div>
-            <p class="mt-4">&copy; 2025 A. Logos Ailys</p>
-        </footer>
     </div>
+
+    <!-- ▼▼▼ 新しいフッターに更新 ▼▼▼ -->
+    <footer class="text-center text-gray-500 text-sm py-10 px-4">
+        <div class="space-x-4 md:space-x-6">
+            <a href="#" class="hover:underline">How to use</a>
+            <a href="/terms.html" class="hover:underline">Terms of Service</a>
+            <a href="/privacy.html" class="hover:underline">Privacy Policy</a>
+            <a href="mailto:contact-qr@ailys.app" class="hover:underline">Contact</a>
+            <a href="https://www.buymeacoffee.com/ailys" target="_blank" class="hover:underline">Support the Experiment</a>
+        </div>
+        <p class="mt-4">&copy; 2025 A. Logos Ailys</p>
+    </footer>
+    <!-- ▲▲▲ 新しいフッターに更新 ▲▲▲ -->
 
     <script type="module" src="/app.js"></script>
 </body>
