@@ -19,6 +19,7 @@ window.addEventListener('DOMContentLoaded', () => {
             text: redirectUrl,
             width: 200,
             height: 200,
+            correctLevel: QRCode.CorrectLevel.L // ← これがキモ！ エラー訂正レベルをL(Low)に設定
         });
 
         // Handle download button
