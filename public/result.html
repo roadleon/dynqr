@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your QR Code is Ready! - DynQR</title>
+    
+    <!-- Icons -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/logo.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Open Graph (OGP) for Social Sharing -->
+    <meta property="og:title" content="DynQR - Free Dynamic QR Code Generator">
+    <meta property="og:image" content="https://qr.ailys.app/og_image_en.jpg">
+    <meta property="og:url" content="https://qr.ailys.app/">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +27,10 @@
 <body class="bg-gray-50 flex items-center justify-center min-h-screen">
     <main class="w-full max-w-lg mx-auto p-4">
         <section id="result-section" class="bg-white p-6 md:p-8 rounded-xl shadow-md text-center">
+            
+            <a href="/" class="block mb-6">
+                <img src="/logo.svg" alt="DynQR Logo" class="h-10 w-auto mx-auto">
+            </a>
             <h1 class="text-2xl font-bold text-gray-800 mb-4">Your Dynamic QR Code is Ready!</h1>
             
             <div id="qrcode-container" class="flex justify-center mb-4">
@@ -43,7 +59,6 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-    <script type="module" src="result.js"></script>
+    <script type="module" src="/result.js"></script>
 </body>
 </html>
-
