@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QRコードが完成しました！ - DynQR</title>
     
     <!-- Icons -->
@@ -33,25 +33,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { 
+            font-family: 'Inter', sans-serif;
+            /* Add padding to the top to prevent content from being hidden behind the fixed header */
+            padding-top: 72px; /* Height of the header */
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
     <!-- Common Header (Sticky) -->
-    <header class="sticky top-0 z-50 p-4 bg-gray-50/80 backdrop-blur-sm border-b border-gray-200/60">
+    <header class="fixed top-0 left-0 right-0 z-50 p-4 bg-gray-50/80 backdrop-blur-sm border-b border-gray-200/60">
         <div class="container mx-auto flex justify-between items-center max-w-4xl">
             <a href="/">
                 <img src="/logo.svg" alt="DynQR Logo" class="h-8 w-auto">
             </a>
             <div class="flex items-center space-x-2">
-                <a href="mailto:contact-qr+idea@ailys.app" class="bg-blue-100 text-blue-800 text-sm font-semibold px-4 py-2 rounded-lg hover:bg-blue-200 transition-colors flex items-center space-x-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                    <span>Try Ideas</span>
+                <!-- Using image for the button -->
+                <a href="mailto:contact_qr+idea@ailys.app">
+                    <img src="/ti_button.png" alt="Try Ideas" class="h-9 w-auto">
                 </a>
-                <a href="https://x.com/intent/tweet?text=この動的QRコードジェネレーター、無料で使いやすい！&url=https%3A%2F%2Fqr.ailys.app" target="_blank" class="bg-black text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors flex items-center space-x-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z"/></svg>
-                    <span>Share on X</span>
+                <!-- Using image for the button -->
+                <a href="https://x.com/intent/tweet?text=この動的QRコードジェネレーター、無料で使いやすい！&url=https%3A%2F%2Fqr.ailys.app" target="_blank">
+                     <img src="/x_button.png" alt="Share on X" class="h-9 w-auto">
                 </a>
             </div>
         </div>
