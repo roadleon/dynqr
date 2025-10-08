@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QRコードが完成しました！ - DynQR</title>
+    <title>Your QR Code is Ready! - DynQR</title>
     
     <!-- Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -14,18 +14,17 @@
     <meta name="robots" content="noindex, nofollow">
     
     <!-- OGP Tags for Social Sharing -->
-    <meta property="og:title" content="DynQR - 無料で使える動的QRコードジェネレーター">
-    <meta property="og:description" content="後からリンク先を変更できる動的QRコードを、登録不要・完全無料で作成できます。">
+    <meta property="og:title" content="DynQR - Free Dynamic QR Code Generator">
+    <meta property="og:description" content="Create free Dynamic QR codes that allow you to change the destination link later.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://qr.ailys.app/">
-    <meta property="og:image" content="https://qr.ailys.app/og_image_ja.jpg">
+    <meta property="og:image" content="https://qr.ailys.app/og_image_en.jpg">
     
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="DynQR - 無料で使える動的QRコードジェネレーター">
-    <meta name="twitter:description" content="後からリンク先を変更できる動的QRコードを、登録不要・完全無料で作成できます。">
-    <meta name="twitter:image" content="https://qr.ailys.app/og_image_ja.jpg">
-
+    <meta name="twitter:title" content="DynQR - Free Dynamic QR Code Generator">
+    <meta name="twitter:description" content="Create free Dynamic QR codes that allow you to change the destination link later.">
+    <meta name="twitter:image" content="https://qr.ailys.app/og_image_en.jpg">
 
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -35,7 +34,6 @@
     <style>
         body { 
             font-family: 'Inter', sans-serif;
-            /* Add padding to the top to prevent content from being hidden behind the fixed header */
             padding-top: 72px; /* Height of the header */
         }
     </style>
@@ -52,7 +50,7 @@
                 <a href="mailto:contact_qr+idea@ailys.app">
                     <img src="/ti_button.png" alt="Try Ideas" class="h-9 w-auto">
                 </a>
-                <a href="https://x.com/intent/tweet?text=この動的QRコードジェネレーター、無料で使いやすい！&url=https%3A%2F%2Fqr.ailys.app" target="_blank">
+                <a href="https://x.com/intent/tweet?text=Check%20out%20this%20free%20Dynamic%20QR%20Code%20generator!&url=https%3A%2F%2Fqr.ailys.app" target="_blank">
                      <img src="/x_button.png" alt="Share on X" class="h-9 w-auto">
                 </a>
             </div>
@@ -121,7 +119,6 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script type="module" src="/result.js"></script>
     <script>
-        // How to useリンクがトップページのモーダルを指すように調整
         document.getElementById('how-to-use-link').addEventListener('click', function(e) {
             e.preventDefault();
             window.location.href = '/'; 
