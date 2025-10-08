@@ -12,6 +12,20 @@
 
     <!-- Meta Tags -->
     <meta name="robots" content="noindex, nofollow">
+    
+    <!-- OGP Tags for Social Sharing -->
+    <meta property="og:title" content="DynQR - 無料で使える動的QRコードジェネレーター">
+    <meta property="og:description" content="後からリンク先を変更できる動的QRコードを、登録不要・完全無料で作成できます。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qr.ailys.app/">
+    <meta property="og:image" content="https://qr.ailys.app/og_image_ja.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DynQR - 無料で使える動的QRコードジェネレーター">
+    <meta name="twitter:description" content="後からリンク先を変更できる動的QRコードを、登録不要・完全無料で作成できます。">
+    <meta name="twitter:image" content="https://qr.ailys.app/og_image_ja.jpg">
+
 
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -24,8 +38,8 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- Common Header -->
-    <header class="p-4">
+    <!-- Common Header (Sticky) -->
+    <header class="sticky top-0 z-50 p-4 bg-gray-50/80 backdrop-blur-sm border-b border-gray-200/60">
         <div class="container mx-auto flex justify-between items-center max-w-4xl">
             <a href="/">
                 <img src="/logo.svg" alt="DynQR Logo" class="h-8 w-auto">
@@ -105,11 +119,9 @@
         // How to useリンクがトップページのモーダルを指すように調整
         document.getElementById('how-to-use-link').addEventListener('click', function(e) {
             e.preventDefault();
-            // トップページに移動してからモーダルを開く挙動はJSだけでは難しいので、
-            // 一旦トップページに遷移させる。app.js側でハッシュを検知してモーダルを開くのが理想。
-            // 今回はシンプルにトップページへ。
             window.location.href = '/'; 
         });
     </script>
 </body>
 </html>
+
