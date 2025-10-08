@@ -34,13 +34,12 @@
     <style>
         body { 
             font-family: 'Inter', sans-serif;
-            padding-top: 72px; /* Height of the header */
+            padding-top: 72px; 
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- Common Header (Fixed) -->
     <header class="fixed top-0 left-0 right-0 z-50 p-4 bg-gray-50/80 backdrop-blur-sm border-b border-gray-200/60">
         <div class="container mx-auto flex justify-between items-center max-w-4xl">
             <a href="/">
@@ -62,19 +61,15 @@
             <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8">Your Dynamic QR Code is Ready!</h1>
             
             <div class="flex flex-col items-center justify-center gap-8 mb-12">
-                <!-- QR Code -->
                 <div id="qrcode-container" class="p-4 bg-white rounded-lg shadow-md inline-block">
-                    <!-- QR code will be generated here by JavaScript -->
                 </div>
                 
-                <!-- Download Button -->
                 <a id="download-link" href="#" download="dynqr-code.png" class="w-full text-white font-bold py-3 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 ease-in-out bg-gradient-to-r from-cyan-400 to-blue-500 hover:shadow-lg hover:from-cyan-500 hover:to-blue-600 transform hover:-translate-y-0.5 flex items-center justify-center space-x-3">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                     <span>Download</span>
                 </a>
             </div>
 
-            <!-- Edit URL Section -->
             <div class="bg-white p-6 rounded-lg text-left w-full shadow-sm border border-gray-200">
                 <h3 class="font-bold text-lg mb-2">Your Secret Edit URL</h3>
                 <p class="text-sm text-gray-600 mb-4">This URL is your secret key to change the destination link. Please bookmark it or save it in a safe place.</p>
@@ -89,7 +84,6 @@
             </div>
         </section>
 
-        <!-- Buy me a coffee Section -->
         <section class="mt-12">
             <div class="bg-slate-100 p-4 rounded-lg text-center md:text-left">
                 <div class="md:flex md:items-center md:justify-between">
@@ -105,10 +99,9 @@
         </section>
     </main>
 
-    <!-- Common Footer -->
     <footer class="text-center text-gray-500 text-sm py-10 px-4">
         <div class="space-x-4 md:space-x-6">
-            <a href="/#how-to-use-modal" id="how-to-use-link" class="hover:underline">How to use</a>
+            <a href="/index.html?modal=htu" class="hover:underline">How to use</a>
             <a href="/terms.html" class="hover:underline">Terms of Service</a>
             <a href="/privacy.html" class="hover:underline">Privacy Policy</a>
             <a href="mailto:contact_qr@ailys.app" class="hover:underline">Contact</a>
@@ -118,12 +111,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script type="module" src="/result.js"></script>
-    <script>
-        document.getElementById('how-to-use-link').addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = '/'; 
-        });
-    </script>
 </body>
 </html>
 
