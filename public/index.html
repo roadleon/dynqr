@@ -31,15 +31,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .modal-enter { transition: opacity 0.3s ease; }
-        .modal-leave { transition: opacity 0.3s ease; }
-        .modal-enter-from, .modal-leave-to { opacity: 0; }
-        .modal-enter-to, .modal-leave-from { opacity: 1; }
-        .modal-content-enter { transition: transform 0.3s ease; }
-        .modal-content-leave { transition: transform 0.3s ease; }
-        .modal-content-enter-from, .modal-content-leave-to { transform: scale(0.95); }
-        .modal-content-enter-to, .modal-content-leave-from { transform: scale(1); }
-
         .loader {
             border-top-color: #3b82f6;
             animation: spinner 1.5s linear infinite;
@@ -54,7 +45,6 @@
     <div class="min-h-screen flex flex-col">
         <div class="flex-grow flex items-center justify-center p-4">
             <div class="w-full max-w-lg text-center">
-                <!-- Header -->
                 <header class="mb-8">
                     <a href="/">
                         <img src="/logo.svg" alt="DynQR Logo" class="h-12 w-auto mx-auto">
@@ -62,7 +52,6 @@
                     <p class="text-gray-600 mt-2">Dynamic QR code generator</p>
                 </header>
 
-                <!-- QR Code Form -->
                 <main id="generator-section" class="px-4">
                     <p class="text-gray-700 mb-6">Create free Dynamic QR codes that allow you to change the destination link later.</p>
                     <form id="qr-form" class="space-y-4">
@@ -77,10 +66,9 @@
             </div>
         </div>
 
-        <!-- Footer -->
         <footer class="text-center text-gray-500 text-sm py-10 px-4">
             <div class="space-x-4 md:space-x-6">
-                <a href="#how-to-use" id="how-to-use-open" class="hover:underline">How to use</a>
+                <a href="#" id="how-to-use-open" class="hover:underline">How to use</a>
                 <a href="/terms.html" class="hover:underline">Terms of Service</a>
                 <a href="/privacy.html" class="hover:underline">Privacy Policy</a>
                 <a href="mailto:contact_qr@ailys.app" class="hover:underline">Contact</a>
@@ -90,8 +78,8 @@
     </div>
     
     <!-- How to use Modal -->
-    <div id="how-to-use-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-start justify-center p-4 modal-enter modal-enter-from overflow-y-auto" data-transition-parent>
-        <div id="modal-content" class="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-6 md:p-8 relative modal-content-enter modal-content-enter-from my-8" data-transition-child>
+    <div id="how-to-use-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-start justify-center p-4 overflow-y-auto">
+        <div id="modal-content" class="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-6 md:p-8 relative my-8">
             <button id="how-to-use-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
@@ -101,21 +89,16 @@
             </div>
 
             <div class="grid md:grid-cols-3 gap-8 items-start text-center">
-                <!-- Step 1 -->
                 <div class="flex flex-col items-center">
                     <div class="text-xl font-bold border-2 border-gray-400 rounded-full w-10 h-10 flex items-center justify-center mb-4">1</div>
                     <p class="mb-4">Enter the URL you want to link and generate a Dynamic QR code.</p>
                     <img src="/htu-step1.png" alt="Step 1: Enter URL" class="rounded-lg w-full max-w-[200px]">
                 </div>
-
-                <!-- Step 2 -->
                 <div class="flex flex-col items-center">
                     <div class="text-xl font-bold border-2 border-gray-400 rounded-full w-10 h-10 flex items-center justify-center mb-4">2</div>
                     <p class="mb-4">Download the generated QR code and save the edit URL.</p>
                      <img src="/htu-step2.png" alt="Step 2: Download QR and Save URL" class="rounded-lg w-full max-w-[200px]">
                 </div>
-
-                <!-- Step 3 -->
                 <div class="flex flex-col items-center">
                     <div class="text-xl font-bold border-2 border-gray-400 rounded-full w-10 h-10 flex items-center justify-center mb-4">3</div>
                     <p class="mb-4">When you want to change the destination, go to the edit URL and update the link.</p>
@@ -130,6 +113,51 @@
     </div>
 
     <script type="module" src="/app.js"></script>
+    
+    <!-- Script for Modal (FIXED) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const openBtn = document.getElementById('how-to-use-open');
+            const closeBtn = document.getElementById('how-to-use-close');
+            const modal = document.getElementById('how-to-use-modal');
+
+            const openModal = () => {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            };
+
+            const closeModal = () => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; // Restore background scrolling
+            };
+
+            if (openBtn && closeBtn && modal) {
+                openBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModal();
+                });
+
+                closeBtn.addEventListener('click', closeModal);
+
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal();
+                    }
+                });
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                        closeModal();
+                    }
+                });
+
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('modal') === 'htu') {
+                    openModal();
+                }
+            }
+        });
+    </script>
 </body>
 </html>
 
