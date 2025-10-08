@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>DynQR - Free Dynamic QR Code Generator</title>
-    <meta name="description" content="Create free Dynamic QR codes that allow you to change the destination link later. Simple, fast, and no registration required.">
+    <title>DynQR - 無料で使える動的QRコードジェネレーター</title>
+    <meta name="description" content="DynQRは、後からリンク先を変更できる動的QRコードを無料で作成できるサービスです。登録不要で、誰でも簡単にご利用いただけます。">
 
     <!-- Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -13,68 +13,186 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <!-- Open Graph (OGP) for Social Sharing -->
-    <meta property="og:title" content="DynQR - Free Dynamic QR Code Generator">
-    <meta property="og:description" content="Create free Dynamic QR codes that allow you to change the destination link later.">
-    <meta property="og:image" content="https://qr.ailys.app/og_image_en.jpg">
+    <meta property="og:title" content="DynQR - 無料で使える動的QRコードジェネレーター">
+    <meta property="og:description" content="後からリンク先を変更できる動的QRコードを、登録不要・完全無料で作成できます。">
+    <meta property="og:image" content="https://qr.ailys.app/og_image_ja.jpg">
     <meta property="og:url" content="https://qr.ailys.app/">
     <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
 
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
+        body { 
+            font-family: 'Inter', sans-serif;
+        }
         .loader {
-            border-top-color: #3498db;
+            border-top-color: #3b82f6;
             animation: spinner 1.5s linear infinite;
         }
         @keyframes spinner {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        /* Fade-in animation for modal */
+        .modal-fade-enter {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .modal-fade-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.2s ease-out;
+        }
+        .modal-fade-leave-active {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.2s ease-in;
+        }
     </style>
 </head>
-<!-- ▼▼▼ 背景色をデザインに合わせて変更 ▼▼▼ -->
-<body class="bg-slate-50 font-sans">
-    
-    <!-- トップページは中央ロゴのため、新しい共通ヘッダーは不要 -->
+<body class="bg-gray-50 text-gray-800">
 
-    <div class="container mx-auto px-4 py-8 md:py-16 max-w-2xl">
-
-        <!-- Header -->
-        <header class="text-center mb-8">
-            <a href="/">
-                <img src="/logo.svg" alt="DynQR Logo" class="h-12 w-auto mx-auto">
-            </a>
-            <p class="text-gray-600 mt-2">Dynamic QR code generator</p>
-        </header>
-
-        <!-- QR Code Form (ここは次のステップで変更) -->
-        <main id="generator-section" class="bg-white p-6 md:p-8 rounded-xl shadow-md">
-            <p class="text-center text-gray-700 mb-6">Create free Dynamic QR codes that allow you to change the destination link later.</p>
-            <form id="qr-form" class="space-y-4">
-                <input type="url" id="destination-url" placeholder="https://example.com" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-transform transform hover:scale-105 flex items-center justify-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-                    <span>Generate Dynamic QR Code for Free</span>
-                </button>
-            </form>
-            <div id="loader" class="hidden w-12 h-12 mx-auto mt-6 rounded-full border-4 border-gray-200 loader"></div>
+    <!-- Main Content -->
+    <div class="flex flex-col items-center justify-between min-h-screen bg-gradient-to-b from-white via-blue-50 to-gray-50">
+        
+        <!-- Generator Section -->
+        <main class="flex flex-col items-center justify-center text-center px-4 w-full flex-grow">
+            <div class="w-full max-w-lg">
+                <!-- Header -->
+                <header class="text-center mb-8">
+                    <a href="/">
+                        <img src="/logo.svg" alt="DynQR Logo" class="h-16 w-auto mx-auto">
+                    </a>
+                    <h1 class="text-xl md:text-2xl font-bold text-gray-800 mt-2">Dynamic QR code generator</h1>
+                </header>
+        
+                <!-- Form Section -->
+                <div id="generator-section" class="w-full">
+                    <p class="text-gray-600 mb-6 text-sm md:text-base">Create free Dynamic QR codes that allow you to change the destination link later.</p>
+                    <form id="qr-form" class="space-y-4">
+                        <input type="url" id="destination-url" placeholder="https://example.com" required class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow shadow-sm focus:shadow-md">
+                        
+                        <!-- New Gradient Button -->
+                        <button type="submit" class="w-full text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 ease-in-out bg-gradient-to-r from-cyan-400 to-blue-500 hover:shadow-lg hover:from-cyan-500 hover:to-blue-600 transform hover:-translate-y-0.5 flex items-center justify-center space-x-3">
+                            <!-- Custom SVG Icon -->
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 4H10V10H4V4Z" fill="white"/>
+                                <path d="M4 14H10V20H4V14Z" fill="white"/>
+                                <path d="M14 4H20V10H14V4Z" fill="white"/>
+                                <path d="M16.5 14H17.5L14 17.5V19.5H16V21.5H18V19.5H20V17.5L16.5 14Z" fill="white"/>
+                            </svg>
+                            <span>Dynamic QR code generate for free</span>
+                        </button>
+                    </form>
+                    <div id="loader" class="hidden w-10 h-10 mx-auto mt-6 rounded-full border-4 border-gray-200 loader"></div>
+                </div>
+            </div>
         </main>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 text-sm py-8 px-4 w-full">
+            <div class="space-x-4 md:space-x-6">
+                <a href="#" id="how-to-use-link" class="hover:underline">How to use</a>
+                <a href="/terms.html" class="hover:underline">Terms of Service</a>
+                <a href="/privacy.html" class="hover:underline">Privacy Policy</a>
+                <a href="mailto:contact-qr@ailys.app" class="hover:underline">Contact</a>
+                <a href="https://www.buymeacoffee.com/ailys" target="_blank" class="hover:underline">Support the Experiment</a>
+            </div>
+            <p class="mt-4">&copy; 2025 A. Logos Ailys</p>
+        </footer>
+    </div>
+    
+    <!-- How to use Modal -->
+    <div id="how-to-use-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 hidden modal-fade-leave-active" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div id="modal-content" class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl p-6 md:p-8 relative transform transition-all">
+            <button id="close-modal-button" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            
+            <div class="text-center mb-8">
+                <img src="/logo.svg" alt="DynQR Logo" class="h-12 w-auto mx-auto">
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 items-start text-center">
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center">
+                    <div class="flex items-center justify-center w-12 h-12 rounded-full border-2 border-gray-300 text-gray-500 font-bold text-xl mb-4">1</div>
+                    <p class="text-gray-700 mb-4 font-medium">Enter the URL you want to link and generate a Dynamic QR code.</p>
+                    <img src="https://placehold.co/200x100/FFFFFF/333333?text=Generate%0AForm" alt="Generate form" class="rounded-lg shadow-md border">
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center">
+                    <div class="flex items-center justify-center w-12 h-12 rounded-full border-2 border-gray-300 text-gray-500 font-bold text-xl mb-4">2</div>
+                    <p class="text-gray-700 mb-4 font-medium">Download the generated QR code and save the edit URL.</p>
+                    <img src="https://placehold.co/200x200/FFFFFF/333333?text=QR%20Code%0A%26%0AEdit%20URL" alt="QR Code and Edit URL" class="rounded-lg shadow-md border">
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center">
+                    <div class="flex items-center justify-center w-12 h-12 rounded-full border-2 border-gray-300 text-gray-500 font-bold text-xl mb-4">3</div>
+                    <p class="text-gray-700 mb-4 font-medium">When you want to change the destination, go to the edit URL and update the link.</p>
+                    <img src="https://placehold.co/200x130/FFFFFF/333333?text=Update%0AForm" alt="Update form" class="rounded-lg shadow-md border">
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t text-center">
+                <p class="text-xs text-gray-500">You can update it as many times as you like. However, we don't manage the edit URL on our side, so if you lose it, you won't be able to make changes. Please keep it safe.</p>
+            </div>
+        </div>
     </div>
 
-    <!-- ▼▼▼ 新しいフッターに更新 ▼▼▼ -->
-    <footer class="text-center text-gray-500 text-sm py-10 px-4">
-        <div class="space-x-4 md:space-x-6">
-            <a href="#" class="hover:underline">How to use</a>
-            <a href="/terms.html" class="hover:underline">Terms of Service</a>
-            <a href="/privacy.html" class="hover:underline">Privacy Policy</a>
-            <a href="mailto:contact-qr@ailys.app" class="hover:underline">Contact</a>
-            <a href="https://www.buymeacoffee.com/ailys" target="_blank" class="hover:underline">Support the Experiment</a>
-        </div>
-        <p class="mt-4">&copy; 2025 A. Logos Ailys</p>
-    </footer>
-    <!-- ▲▲▲ 新しいフッターに更新 ▲▲▲ -->
 
     <script type="module" src="/app.js"></script>
+    <script>
+        // --- Modal Control Script ---
+        const howToUseLink = document.getElementById('how-to-use-link');
+        const modal = document.getElementById('how-to-use-modal');
+        const modalContent = document.getElementById('modal-content');
+        const closeModalButton = document.getElementById('close-modal-button');
+
+        const openModal = () => {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('modal-fade-leave-active');
+                modal.classList.add('modal-fade-enter-active');
+            }, 10); // Short delay to allow display property to apply before transition
+        };
+
+        const closeModal = () => {
+            modal.classList.remove('modal-fade-enter-active');
+            modal.classList.add('modal-fade-leave-active');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200); // Match transition duration
+        };
+
+        howToUseLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            openModal();
+        });
+
+        closeModalButton.addEventListener('click', closeModal);
+
+        // Close modal when clicking on the background overlay
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal with the 'Escape' key
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
-
